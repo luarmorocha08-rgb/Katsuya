@@ -178,6 +178,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .btn3d{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:13px;border-radius:12px;border:1px solid rgba(248,178,34,.45);color:var(--gold2);font-weight:600;font-size:14px}
 .arhero{cursor:pointer}
 
+/* AR direto: um toque abre a câmera */
+.arbadge{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;background:var(--gold);color:#141414;padding:7px 11px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2}
+.arsplash{position:fixed;inset:0;z-index:80;background:radial-gradient(90% 60% at 50% 30%,rgba(228,34,39,.28),transparent 70%),var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:calc(24px + var(--safe-t)) 24px calc(28px + var(--safe-b));text-align:center}
+.arsplash img{width:min(78vw,340px);aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 24px 40px rgba(0,0,0,.55))}
+.arsplash h1{margin:0;font-family:"Shippori Mincho",serif;font-size:30px;line-height:1.15}
+.arsplash p{margin:0;color:#cfc2b1;font-size:15px;line-height:1.55;max-width:340px}
+.arsplash .go{display:flex;align-items:center;justify-content:center;gap:10px;width:min(100%,360px);padding:18px;border-radius:16px;background:var(--gold);color:#141414;font-weight:700;font-size:17px;margin-top:6px;box-shadow:0 14px 34px rgba(248,178,34,.25)}
+.arsplash .alt{color:var(--mute);font-size:14px;text-decoration:underline;padding:8px}
+.arsplash .brand{position:absolute;top:calc(16px + var(--safe-t));left:20px}
+.qrbox{display:grid;place-items:center;gap:10px;margin:16px 0 6px}
+.qrbox img{width:220px;height:220px;border-radius:14px;background:#fff;padding:10px;image-rendering:pixelated}
+.qrbox small{color:var(--mute);font-size:12px;word-break:break-all;text-align:center}
+
 /* reservas */
 .resgrid{display:grid;grid-template-columns:1fr;max-width:620px;margin:0 auto}
 form.res{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:24px;border-radius:20px;background:var(--bg2);border:1px solid var(--line)}
@@ -484,7 +497,7 @@ body.menu-mode #menuApp{display:block}
       <div class="hello"><p id="greet">Boa noite</p><h1>Veja o prato <span>na sua mesa</span> antes de pedir.</h1></div>
       <div class="arhero" role="button" tabindex="0" data-open-mesa>
         <div class="cube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></div>
-        <div><b>Sua mesa em 3D</b><span>Monte o pedido e veja os pratos servidos na mesa. Toque aqui para abrir.</span></div>
+        <div><b>Veja o prato na sua mesa</b><span>Toque em “Ver na mesa” num prato: a câmera abre e ele aparece aqui na sua frente. Ou toque aqui para montar o pedido em 3D.</span></div>
       </div>
     </header>
     <div class="appnav">
@@ -543,6 +556,15 @@ body.menu-mode #menuApp{display:block}
   </div>
   <div class="detail" style="padding-top:12px"><div class="m3d-add" id="m3dAddApp" style="margin-top:0"></div></div>
 </div>
+<div class="arsplash" id="arSplash" hidden>
+  <a href="#cardapio" class="brand"><img class="logo" src="assets/img/logo.png" alt="Katsuya" style="width:42px;height:42px;filter:none"><div style="text-align:left"><b>Katsuya</b><small>Cardápio na mesa</small></div></a>
+  <img id="arsImg" alt="">
+  <h1 id="arsName"></h1>
+  <p>Toque no botão, aponte a câmera para a mesa e o prato aparece nela, no tamanho real.</p>
+  <button class="go" id="arsGo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg>Abrir câmera e ver na mesa</button>
+  <a class="alt" href="#cardapio">Ver o cardápio completo</a>
+</div>
+<model-viewer id="arMv" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" ar-placement="floor" aria-hidden="true" style="position:fixed;left:-20px;top:0;width:2px;height:2px;opacity:0;pointer-events:none"></model-viewer>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -571,15 +593,15 @@ const CATS=[
   {id:"bebidas",name:"Bebidas"}
 ];
 const ITEMS=[
-  {id:"sushi",cat:"sushi",name:"Combinado Katsuya",sub:"12 peças",price:79.9,model:GLB_sushi,img:"assets/img/sushi.png",
+  {id:"sushi",cat:"sushi",name:"Combinado Katsuya",sub:"12 peças",price:79.9,model:GLB_sushi,ios:"assets/models/sushi.usdz",img:"assets/img/sushi.png",
    short:"12 peças: nigiri de salmão e atum + hossomaki, servido na tábua.",
    desc:"Seleção do sushiman com 3 nigiris de salmão, 3 de atum e 6 hossomakis. Acompanha gengibre em conserva (gari) e wasabi.",
    nutri:[["520","kcal"],["34g","proteína"],["12","peças"],["1–2","pessoas"]],ing:["Salmão","Atum","Arroz","Alga nori","Wasabi","Gari"],tags:[]},
-  {id:"tonkatsu",cat:"quentes",name:"Tonkatsu",sub:"Prato quente",price:54.9,model:GLB_tonkatsu,img:"assets/img/tonkatsu.png",
+  {id:"tonkatsu",cat:"quentes",name:"Tonkatsu",sub:"Prato quente",price:54.9,model:GLB_tonkatsu,ios:"assets/models/tonkatsu.usdz",img:"assets/img/tonkatsu.png",
    short:"Lombo suíno empanado no panko, arroz japonês, repolho e molho tonkatsu.",
    desc:"Lombo suíno empanado no panko e frito na hora. Servido com arroz japonês com gergelim, repolho fatiado, limão e molho tonkatsu.",
    nutri:[["780","kcal"],["42g","proteína"],["15","min"],["1","pessoa"]],ing:["Lombo suíno","Panko","Arroz","Repolho","Molho tonkatsu"],tags:["Mais pedido"]},
-  {id:"lamen",cat:"lamen",name:"Lámen Tonkotsu",sub:"Prato quente",price:49.9,model:GLB_lamen,img:"assets/img/lamen.png",
+  {id:"lamen",cat:"lamen",name:"Lámen Tonkotsu",sub:"Prato quente",price:49.9,model:GLB_lamen,ios:"assets/models/lamen.usdz",img:"assets/img/lamen.png",
    short:"Caldo cremoso de osso suíno, chashu, ovo marinado, nori e cebolinha.",
    desc:"Caldo tonkotsu, macarrão, duas fatias de chashu (barriga suína), ovo marinado, narutomaki, nori, gergelim e cebolinha.",
    nutri:[["690","kcal"],["36g","proteína"],["12h","de caldo"],["1","pessoa"]],ing:["Caldo tonkotsu","Chashu","Ovo","Lámen","Nori","Cebolinha"],tags:[]},
@@ -615,13 +637,16 @@ function readHashMesa(){const m=location.hash.match(/^#mesa-(\d{1,3})$/);if(m)me
 function paintMesa(){if(!mesa)return;$("#mesaTag").innerHTML=`Mesa <em>${String(mesa).padStart(2,"0")}</em>`;$("#mesaIn").value=mesa}
 
 /* ---------- rotas: site × cardápio da mesa ---------- */
-function isMenuRoute(){return location.hash==="#cardapio"||/^#mesa-\d+$/.test(location.hash)||/\/cardapio\/?$/.test(location.pathname)}
+function isMenuRoute(){return location.hash==="#cardapio"||/^#ar-[\w-]+$/.test(location.hash)||/^#mesa-\d+$/.test(location.hash)||/\/cardapio\/?$/.test(location.pathname)}
 let lastMode=null;
 function route(){
   readHashMesa();paintMesa();
   const menu=isMenuRoute();
   document.body.classList.toggle("menu-mode",menu);
   if(menu!==lastMode){window.scrollTo(0,0);lastMode=menu}
+  const m=location.hash.match(/^#ar-([\w-]+)$/),it=m&&ITEMS.find(i=>i.id===m[1]&&i.model);
+  $("#arSplash").hidden=!it;
+  if(it){$("#arsImg").src=it.img;$("#arsImg").alt=it.name;$("#arsName").textContent=it.name;$("#arsGo").dataset.ar=it.id;prepAR(it)}
   updateCart();
 }
 window.addEventListener("hashchange",route);
@@ -629,7 +654,7 @@ const H=new Date().getHours();$("#greet").textContent=H<12?"Bom dia":H<18?"Boa t
 
 /* ---------- renderizadores ---------- */
 function tagHTML(t){return t.map(x=>`<span class="tag">${x}</span>`).join("")}
-function fcard(it){return `<button class="fcard" data-open="${it.id}"><span class="badge">VER EM 3D</span>
+function fcard(it){return `<button class="fcard" data-open="${it.id}"><span class="arbadge" data-ar="${it.id}" role="button" aria-label="Ver ${it.name} na minha mesa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg>Ver na mesa</span>
   <img src="${it.img}" alt="${it.name}" loading="lazy"><h3>${it.name}</h3><p>${it.short}</p>
   <div class="row"><span class="price">${brl(it.price)}</span><span class="add" data-add="${it.id}" aria-label="Adicionar">+</span></div></button>`}
 function itemRow(it){return `<div class="item" data-open="${it.id}" role="button" tabindex="0">
@@ -683,9 +708,41 @@ function openCart(){setMode(mesa?"mesa":"wa");openSheet($("#csheet"))}  // veio 
 function add(id,q=1){cart[id]=(cart[id]||0)+q;updateCart();toast("Adicionado ao pedido")}
 let tt;function toast(m){const el=$("#toast");el.textContent=m;el.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>el.classList.remove("show"),1800)}
 
+/* ---------- AR direto: o prato aparece na mesa do cliente com um toque ---------- */
+const arMv=$("#arMv");
+const isPhone=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+function prepAR(it){
+  if(arMv.getAttribute("src")===it.model)return;
+  arMv.setAttribute("src",it.model);arMv.setAttribute("alt",it.name+" na sua mesa");
+  if(it.ios)arMv.setAttribute("ios-src",it.ios);else arMv.removeAttribute("ios-src");
+}
+async function goAR(id){
+  const it=ITEMS.find(i=>i.id===id);if(!it||!it.model){openItem(id);return}
+  prepAR(it);
+  if(!isPhone){showQR(it);return}
+  try{await customElements.whenDefined("model-viewer");if(arMv.updateComplete)await arMv.updateComplete}catch(e){}
+  if(arMv.canActivateAR){arMv.activateAR();return}
+  toast("Este celular não abriu a câmera. Veja o prato em 3D.");openItem(id);
+}
+arMv.addEventListener("ar-status",e=>{if(e.detail.status==="failed"){toast("Não foi possível abrir a câmera neste celular");}});
+let qrLib=null;
+function loadQR(){return qrLib||(qrLib=new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)}))}
+async function showQR(it){
+  const link=location.href.split("#")[0]+"#ar-"+it.id;
+  closeSheets();$("#stage").style.display="none";$("#mvslot").innerHTML="";
+  $("#detail").innerHTML=`<div style="height:36px"></div><button class="close" data-close aria-label="Fechar" style="top:4px;right:16px"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h3>${it.name} na sua mesa</h3><div class="sub">Realidade aumentada abre no celular</div>
+    <div class="qrbox"><img id="qrImg" alt="QR Code para abrir no celular"><small>${link}</small></div>
+    <p class="desc">Aponte a câmera do celular para o código. O site abre direto neste prato: toque em <b>Abrir câmera</b> e ele aparece em cima da sua mesa.</p>
+    <button class="btn btn-ghost" style="width:100%;border-radius:12px;padding:14px" data-open="${it.id}">Ver em 3D aqui no computador</button>`;
+  openSheet($("#dsheet"));
+  try{await loadQR();const q=qrcode(0,"M");q.addData(link);q.make();$("#qrImg").src=q.createDataURL(8,2)}catch(e){$("#qrImg").replaceWith(Object.assign(document.createElement("p"),{textContent:"Abra este endereço no celular:",className:"desc"}))}
+}
+document.addEventListener("pointerdown",e=>{const a=e.target.closest("[data-ar]");if(a){const it=ITEMS.find(i=>i.id===a.dataset.ar);if(it&&it.model)prepAR(it)}},{passive:true});
+
 /* ---------- janelas ---------- */
-function putViewer(src,alt,orbit){
-  $("#mvslot").innerHTML=`<model-viewer id="mv" src="${src}" alt="${alt}" camera-controls touch-action="pan-y"
+function putViewer(src,alt,orbit,ios){
+  $("#mvslot").innerHTML=`<model-viewer id="mv" src="${src}" ${ios?`ios-src="${ios}"`:""} alt="${alt}" camera-controls touch-action="pan-y"
     auto-rotate auto-rotate-delay="1500" rotation-per-second="15deg" shadow-intensity="1.1" exposure="1.05" environment-image="neutral"
     camera-orbit="${orbit}" min-camera-orbit="auto 10deg auto" max-camera-orbit="auto 88deg auto"
     ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" ar-placement="floor" interaction-prompt="none">
@@ -705,7 +762,7 @@ function openItem(id){
   const it=ITEMS.find(i=>i.id===id);let q=1;
   if(it.model){
     $("#stage").style.display="";
-    putViewer(it.model,`${it.name} em 3D`,"20deg 62deg auto");
+    putViewer(it.model,`${it.name} em 3D`,"20deg 62deg auto",it.ios);
   }else{$("#stage").style.display="none";$("#mvslot").innerHTML=""}
   $("#detail").innerHTML=`${it.model?"":`<div style="height:36px"></div><button class="close" data-close aria-label="Fechar" style="top:4px;right:16px"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`}
     <h3>${it.name}</h3><div class="sub">${it.sub||CATS.find(c=>c.id===it.cat).name}</div><p class="desc">${it.desc||it.short}</p>
@@ -750,6 +807,11 @@ async function openMesaAR(btn){
   try{
     const blob=await m.exportGLB();if(arUrl)URL.revokeObjectURL(arUrl);arUrl=URL.createObjectURL(blob);
     const n=Object.values(cart).reduce((a,b)=>a+b,0);
+    if(isPhone){ // tenta abrir a câmera direto com o pedido inteiro
+      arMv.removeAttribute("ios-src");arMv.setAttribute("src",arUrl);
+      try{if(arMv.updateComplete)await arMv.updateComplete}catch(e){}
+      if(arMv.canActivateAR){arMv.activateAR();return}
+    }
     closeSheets();
     setTimeout(()=>{
       $("#stage").style.display="";putViewer(arUrl,"Pedido na mesa em 3D","0deg 50deg auto");
@@ -774,6 +836,7 @@ document.addEventListener("click",e=>{
   if(e.target.closest("[data-m3d-cart]")){closeSheets();setTimeout(openCart,50);return}
   if(e.target.closest("[data-m3d-reset]")){if(mesa3d)mesa3d.resetView();return}
   const md=e.target.closest("[data-mode]");if(md){setMode(md.dataset.mode);return}
+  const ar=e.target.closest("[data-ar]");if(ar){e.preventDefault();goAR(ar.dataset.ar);return}
   const o=e.target.closest("[data-open]");if(o){openItem(o.dataset.open);return}
   const h=e.target.closest("[data-hcat]");if(h){homeCat=h.dataset.hcat;renderHome();return}
   const c=e.target.closest("[data-acat]");if(c){appCat=c.dataset.acat;renderAppChips();const s=document.getElementById("a-"+appCat);if(s)window.scrollTo({top:s.getBoundingClientRect().top+scrollY-118,behavior:"smooth"})}
