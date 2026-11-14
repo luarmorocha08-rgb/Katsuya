@@ -19,3 +19,9 @@ Qualquer servidor estático, por exemplo `python3 -m http.server` e abra `http:/
 - Site: https://katsuya-ochre.vercel.app/
 - QR Codes para imprimir (mesas 1–20 e pratos em AR): https://katsuya-ochre.vercel.app/qr.html
 - Prato direto na câmera: `#ar-sushi`, `#ar-tonkatsu`, `#ar-lamen`
+
+## Realismo dos pratos
+- `assets/js/realismo.js` gera em código texturas de detalhe por ingrediente (grãos de arroz, panko, fibras do peixe, alga, gordura no caldo, esmalte da louça) e aplica pelo nome do material.
+- Os modelos de AR (`assets/models/*.glb` e `*.usdz`) são gerados a partir de `assets/models/src/*.glb` com:
+  `NODE_MODULES=<pasta com three@0.170.0> node tools/realismo-bake.js` (usa Playwright e Python/Pillow).
+- A Mesa 3D usa sombras de contato (GTAO) para dar profundidade entre pratos, comida e mesa.

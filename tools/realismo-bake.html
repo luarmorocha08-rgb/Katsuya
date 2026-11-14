@@ -1,0 +1,18 @@
+<!doctype html><meta charset="utf-8">
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from "three";
+import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+import {GLTFExporter} from "three/addons/exporters/GLTFExporter.js";
+import {USDZExporter} from "three/addons/exporters/USDZExporter.js";
+import {enhance} from "/assets/js/realismo.js";
+const b64=(buf)=>{const b=new Uint8Array(buf);let s="";for(let i=0;i<b.length;i+=32768)s+=String.fromCharCode.apply(null,b.subarray(i,i+32768));return btoa(s)};
+window.bake=async(name)=>{
+  const g=await new GLTFLoader().loadAsync("/assets/models/src/"+name+".glb");
+  enhance(g.scene,{N:1024});
+  const glb=await new GLTFExporter().parseAsync(g.scene,{binary:true,maxTextureSize:1024});
+  const usdz=await new USDZExporter().parseAsync(g.scene,{quickLookCompatible:true,maxTextureSize:1024});
+  return {glb:b64(glb),usdz:b64(usdz)};
+};
+window.ready=true;
+</script>

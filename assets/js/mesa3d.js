@@ -12,6 +12,12 @@ import { GLTFExporter } from "three/addons/exporters/GLTFExporter.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+import { enhance } from "./realismo.js";
+const COARSE = matchMedia("(pointer:coarse)").matches;
 
 /* ---------------------------------------------------------------- util */
 const TAU = Math.PI * 2;
@@ -90,6 +96,10 @@ function initMaterials() {
   MAT.glass = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.04, transmission: 1, thickness: 0.004, ior: 1.5, transparent: true, opacity: 1 });
   MAT.ice = new THREE.MeshPhysicalMaterial({ color: 0xeef8ff, roughness: 0.15, transmission: 0.9, thickness: 0.01, transparent: true });
   MAT.tea = new THREE.MeshPhysicalMaterial({ color: 0x9fb33a, roughness: 0.1, transmission: 0.55, thickness: 0.05, transparent: true, opacity: 0.95 });
+  // nomes = receitas de realismo (assets/js/realismo.js)
+  [["ceramic", "ceramic"], ["ceramicBlack", "ceramic"], ["ceramicRed", "ceramic"], ["rice", "rice"], ["salmon", "salmon"], ["nori", "nori"],
+   ["green", "green"], ["darkGreen", "green"], ["chive", "chive"], ["fried", "fried"], ["carrot", "green"], ["meat", "fried"], ["chashu", "chashu"],
+   ["noodle", "noodle"], ["yakiNoodle", "noodle"], ["lemon", "lemon"]].forEach(([k, n]) => (MAT[k].name = n));
   MAT.mat = new THREE.MeshStandardMaterial({ roughness: 0.95, map: canvasTex(512, 256, (g, w, h) => {
     g.fillStyle = "#1d1b19"; g.fillRect(0, 0, w, h);
     for (let y = 0; y < h; y += 4) { g.fillStyle = `rgba(255,255,255,${0.015 + rnd() * 0.03})`; g.fillRect(0, y, w, 2); }
@@ -126,11 +136,13 @@ const FOOD = {
       if (uy > 0.6) y += 0.0022 * Math.max(0, Math.sin(ux * 22)); // pregas no topo
       p.setXYZ(k, x, y, z);
       const c = new THREE.Color(0xf1e2c0);
-      if (uy < -0.1) c.set(0xa0601f); else if (uy < 0.35) c.lerp(new THREE.Color(0xd09a52), Math.min(1, (0.35 - uy) * 2.2));
+      // servido com o lado selado na chapa para cima (dourado e tostado no topo)
+      const sear = Math.min(1, Math.max(0, (uy - 0.25) * 1.8)) * (0.75 + 0.25 * Math.sin(ux * 31 + uz * 17));
+      c.lerp(new THREE.Color(0xd9a35a), Math.min(1, Math.max(0, (uy + 0.1) * 1.4)) * 0.5).lerp(new THREE.Color(0x8a4a12), sear);
       col.push(c.r, c.g, c.b);
     }
     geo.setAttribute("color", new THREE.Float32BufferAttribute(col, 3)); geo.computeVertexNormals();
-    const m = mat(0xffffff, { vertexColors: true, roughness: 0.5 });
+    const m = new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: 0.55, clearcoat: 0.35, clearcoatRoughness: 0.3, sheen: 0.4, sheenColor: 0xfff1d6 });
     for (let i = 0; i < 6; i++) g.add(mesh(geo, m, { x: -0.072 + i * 0.026, y: 0.012, z: -0.006, ry: Math.PI / 2 + 0.12, rz: 0.12 }));
     return g;
   },
@@ -357,10 +369,21 @@ export function createMesa({ items, onPick, onChange } = {}) {
   scene.fog = new THREE.Fog(0x0e0b0a, 2.6, 5.5);
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.45;
+  scene.environmentIntensity = 0.6;
 
   const camera = new THREE.PerspectiveCamera(34, 1, 0.05, 20);
   camera.position.set(0, 1.05, 1.32);
+  // sombras de contato (oclusão de ambiente) entre pratos, comida e mesa
+  let composer = null;
+  try {
+    composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: COARSE ? 0 : 4 }));
+    composer.addPass(new RenderPass(scene, camera));
+    const ao = new GTAOPass(scene, camera, 1, 1);
+    ao.blendIntensity = 1;
+    ao.updateGtaoMaterial({ radius: 0.05, distanceExponent: 1.4, thickness: 0.04, scale: 1.1, samples: COARSE ? 8 : 16, distanceFallOff: 1 });
+    ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, radiusExponent: 1, rings: 2, samples: COARSE ? 8 : 16 });
+    composer.addPass(ao); composer.addPass(new OutputPass());
+  } catch (e) { console.warn("AO desligado", e); composer = null; }
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 0.02, 0.02);
   controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
@@ -418,6 +441,7 @@ export function createMesa({ items, onPick, onChange } = {}) {
   function buildProcedural(kind) {
     const make = FOOD[kind] || FOOD.generico; reseed(hashStr(kind));
     const g = make(); g.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    enhance(g, { N: COARSE ? 512 : 1024 }); // grãos, relevo e brilho úmido
     return g;
   }
   async function buildDish(it) {
@@ -498,7 +522,7 @@ export function createMesa({ items, onPick, onChange } = {}) {
       const hl = v.obj === hovered ? 1.04 : 1; if (t >= 1) o.scale.setScalar(o.scale.x + (hl - o.scale.x) * 0.25);
     });
     const moved = controls.update();
-    renderer.render(scene, camera);
+    if (composer) composer.render(); else renderer.render(scene, camera);
     if (busy || moved || controls.autoRotate) lastActive = now;
     if (onScreen() && (now - lastActive < 1500 || hovered)) requestAnimationFrame(animate); else running = false;
   }
@@ -519,6 +543,7 @@ export function createMesa({ items, onPick, onChange } = {}) {
   function resize() {
     const w = root.clientWidth, h = root.clientHeight; if (!w || !h) return;
     renderer.setSize(w, h, false); camera.aspect = w / h;
+    if (composer) { composer.setPixelRatio(renderer.getPixelRatio() * (COARSE ? 0.8 : 1)); composer.setSize(w, h); }
     // enquadra a mesa inteira em telas estreitas
     const a = w / h, shape = a < 0.9 ? "tall" : a < 1.3 ? "square" : "wide";
     if (shape !== lastShape) { lastShape = shape; if (!touched) defaultView(); }

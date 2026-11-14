@@ -4,7 +4,7 @@ import base64, pathlib, re, shutil
 root = pathlib.Path(__file__).resolve().parent.parent
 out = root / "dist-artifact"
 shutil.rmtree(out, ignore_errors=True)
-shutil.copytree(root / "assets", out / "assets", ignore=shutil.ignore_patterns("*.glb"))
+shutil.copytree(root / "assets", out / "assets", ignore=shutil.ignore_patterns("*.glb", "*.usdz", "src"))
 html = (root / "index.html").read_text()
 tags = []
 for glb in sorted((root / "assets/models").glob("*.glb")):
