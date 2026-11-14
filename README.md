@@ -14,3 +14,8 @@ Site do restaurante, cardápio digital da mesa (QR Code) e a **Mesa 3D**: cada p
 
 ## Rodar localmente
 Qualquer servidor estático, por exemplo `python3 -m http.server` e abra `http://localhost:8000`.
+
+## No ar
+- Site: https://katsuya-ochre.vercel.app/
+- QR Codes para imprimir (mesas 1–20 e pratos em AR): https://katsuya-ochre.vercel.app/qr.html
+- Prato direto na câmera: `#ar-sushi`, `#ar-tonkatsu`, `#ar-lamen`
