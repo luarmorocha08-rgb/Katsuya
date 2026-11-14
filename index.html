@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Katsuya Sushi · Restaurante Japonês em Praia Grande</title>
+<meta name="description" content="Katsuya Sushi — gastronomia oriental de qualidade em Praia Grande/SP. Cardápio em 3D, delivery, reservas e localização.">
+<meta name="theme-color" content="#101010">
+<link rel="icon" href="assets/img/logo.png">
+<link rel="apple-touch-icon" href="assets/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+<style>
+:root{
+  --bg:#101010;--bg2:#181818;--card:#1e1e1e;--line:#2d2d2d;
+  --red:#e42227;--gold:#f8b222;--gold2:#ffc54a;--ink:#f6f4f1;--mute:#a7a29c;
+  --safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px);
+  --tabh:0px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.serif{font-family:"Shippori Mincho",serif}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:999px;font-weight:600;font-size:14.5px}
+.btn-gold{background:var(--gold);color:#141414}
+.btn-gold:hover{background:var(--gold2)}
+.btn-ghost{border:1px solid rgba(244,236,220,.22)}
+.btn-ghost:hover{border-color:var(--gold)}
+.btn-red{background:var(--red);color:#fff}
+.label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+
+/* ================= SITE ================= */
+.topnav{position:sticky;top:0;z-index:40;background:rgba(16,16,16,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding-top:var(--safe-t)}
+.topnav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:42px;height:42px;border-radius:50%;flex:none;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.brand b{display:block;font-weight:600;font-size:17px;letter-spacing:.01em}
+.brand small{display:block;font-size:11.5px;color:var(--red);margin-top:0;font-weight:500}
+.links{display:flex;gap:26px;font-size:14px;color:#d9ccba}
+.links a:hover,.links a.on{color:var(--gold2)}
+.topnav .btn{padding:9px 16px;font-size:13.5px}
+
+.hero{position:relative;overflow:hidden;padding:56px 0 40px;background:radial-gradient(60% 80% at 80% 30%,rgba(228,34,39,.22),transparent 65%),var(--bg)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
+.herologo{width:96px;height:96px;border-radius:50%;display:block;margin-bottom:18px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 12px 40px rgba(228,34,39,.25)}
+.hero h1{font-family:"Shippori Mincho";font-weight:800;font-size:clamp(38px,5.4vw,66px);line-height:1.06;margin:12px 0 16px}
+.hero h1 em{font-style:normal;color:var(--gold2)}
+.hero p.lead{font-size:16.5px;line-height:1.6;color:#d4c7b6;max-width:470px;margin:0 0 26px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap}
+.heromodel{position:relative;aspect-ratio:1/1;max-height:520px}
+.heromodel .ring{position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(248,178,34,.2)}
+.heromodel model-viewer{position:absolute;inset:0;width:100%;height:100%;background:transparent;--poster-color:transparent}
+.heromodel .tip{position:absolute;left:50%;bottom:4%;transform:translateX(-50%);font-size:12px;color:var(--mute);white-space:nowrap}
+
+
+/* carpas yin-yang */
+.koiwrap{display:grid;place-items:center}
+.koiwrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+.ripple{position:absolute;inset:18%;border-radius:50%;border:1px solid rgba(248,178,34,.18);animation:rip 7s ease-out infinite;opacity:0}
+.ripple.r2{animation-delay:2.3s}.ripple.r3{animation-delay:4.6s}
+@keyframes rip{0%{transform:scale(.75);opacity:0}15%{opacity:.8}100%{transform:scale(1.25);opacity:0}}
+@media (prefers-reduced-motion:reduce){.ripple{animation:none}}
+
+/* atalhos estilo app */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-6px;padding-bottom:10px}
+.qa{display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);transition:border-color .2s}
+.qa:hover{border-color:var(--gold)}
+.qa .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(248,178,34,.12);color:var(--gold);flex:none}
+.qa b{display:block;font-size:15px}
+.qa small{display:block;font-size:12.5px;color:var(--mute);margin-top:2px}
+.qa.main{background:linear-gradient(135deg,#2a1716,var(--bg2));border-color:rgba(248,178,34,.4)}
+
+.sec{padding:72px 0}
+.sec+.sec{border-top:1px solid var(--line)}
+.head{max-width:620px;margin:0 auto 32px;text-align:center}
+.head h2{font-family:"Shippori Mincho";font-size:clamp(28px,3.6vw,40px);line-height:1.15;margin:10px 0 10px}
+.head h2 em{font-style:normal;color:var(--gold2)}
+.head p{color:#c9bdac;font-size:15.5px;line-height:1.6;margin:0}
+
+/* sobre */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.aboutbox{padding:28px;border-radius:20px;background:var(--bg2);border:1px solid var(--line)}
+.aboutbox p{color:#d0c3b2;line-height:1.7;font-size:15px;margin:0}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fact{padding:20px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.fact b{display:block;font-size:22px;color:var(--gold2);font-family:"Shippori Mincho"}
+.fact span{font-size:13px;color:var(--mute);line-height:1.45}
+
+/* cardápio */
+.featgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fcard{border-radius:20px;background:radial-gradient(90% 70% at 50% 35%,#2a2222,var(--card));border:1px solid var(--line);padding:14px;text-align:left;position:relative;width:100%;transition:border-color .2s}
+.fcard:hover{border-color:rgba(248,178,34,.45)}
+.fcard img{width:100%;aspect-ratio:1.3;object-fit:contain;display:block}
+.fcard h3{margin:6px 0 4px;font-size:17px}
+.fcard p{margin:0;color:var(--mute);font-size:13px;line-height:1.45}
+.fcard .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.price{font-weight:700;color:var(--gold2)}
+.badge{position:absolute;top:12px;left:12px;font-size:10.5px;font-weight:700;letter-spacing:.06em;background:rgba(16,16,16,.8);border:1px solid rgba(248,178,34,.5);color:var(--gold2);padding:5px 9px;border-radius:999px}
+.add{width:34px;height:34px;border-radius:50%;background:var(--red);display:grid;place-items:center;flex:none;font-size:20px;line-height:1;color:#fff}
+.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:34px 0 6px}
+.tabs::-webkit-scrollbar{display:none}
+@media (min-width:900px){.tabs{justify-content:center}}
+.chip{flex:none;padding:8px 15px;border-radius:999px;border:1px solid var(--line);font-size:13.5px;color:var(--mute);white-space:nowrap}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#141414;font-weight:600}
+.homelist{display:grid;grid-template-columns:1fr 1fr;column-gap:36px}
+.item{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);width:100%;text-align:left;cursor:pointer}
+.thumb{width:68px;height:68px;flex:none;border-radius:14px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;position:relative;overflow:hidden}
+.thumb img{width:115%;height:115%;object-fit:contain}
+.thumb .kj{font-family:"Shippori Mincho";font-weight:800;font-size:24px;color:var(--gold)}
+.thumb .ar{position:absolute;bottom:4px;right:4px;font-size:9px;font-weight:700;background:var(--gold);color:#141414;border-radius:5px;padding:2px 4px}
+.item .txt{flex:1;min-width:0}
+.item h4{margin:0;font-size:15px;font-weight:600}
+.item p{margin:3px 0 6px;font-size:12.5px;color:var(--mute);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tags{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--mute)}
+.center{text-align:center;margin-top:28px}
+
+/* delivery + AR (cards lado a lado) */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{padding:28px;border-radius:20px;background:var(--bg2);border:1px solid var(--line);display:flex;flex-direction:column}
+.panel h3{font-family:"Shippori Mincho";font-size:24px;margin:10px 0 8px}
+.panel p{color:#c9bdac;line-height:1.6;font-size:14.5px;margin:0 0 18px}
+.panel ul{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:10px}
+.panel li{display:flex;gap:10px;font-size:14px;color:#ddd1c0}
+.panel li i{font-style:normal;width:22px;height:22px;border-radius:50%;background:rgba(248,178,34,.15);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.panel .btn{margin-top:auto;align-self:flex-start}
+.panel.ar{background:radial-gradient(80% 70% at 70% 30%,rgba(228,34,39,.18),transparent 70%),var(--bg2)}
+.mini3d{height:180px;margin:-6px 0 16px;border-radius:14px;background:rgba(0,0,0,.25);overflow:hidden}
+.mini3d model-viewer{width:100%;height:100%;background:transparent;--poster-color:transparent}
+
+/* reservas */
+.resgrid{display:grid;grid-template-columns:1fr;max-width:620px;margin:0 auto}
+form.res{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:24px;border-radius:20px;background:var(--bg2);border:1px solid var(--line)}
+.fld{display:grid;gap:6px;font-size:12.5px;color:var(--mute);font-weight:500}
+.fld input,.fld select{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);font:inherit;font-size:15px;outline:0;width:100%;color-scheme:dark}
+.fld input:focus,.fld select:focus{border-color:var(--gold)}
+.full{grid-column:1/-1}
+.note{grid-column:1/-1;font-size:13px;color:var(--mute);text-align:center;margin:0}
+.resout{grid-column:1/-1;display:none;padding:14px;border-radius:12px;background:rgba(95,211,138,.08);border:1px solid rgba(95,211,138,.35);font-size:14px;line-height:1.5;text-align:center}
+.resout a{color:var(--gold2);text-decoration:underline;font-weight:600}
+
+/* visite */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.crow{display:flex;gap:14px;align-items:center;padding:15px 16px;border-radius:16px;border:1px solid var(--line);background:var(--bg2);margin-bottom:10px;font-size:14.5px}
+a.crow:hover{border-color:var(--gold)}
+.crow .ic{width:40px;height:40px;border-radius:12px;background:rgba(248,178,34,.12);display:grid;place-items:center;color:var(--gold);flex:none}
+.crow small{display:block;color:var(--mute);font-size:12px}
+.crow .go{margin-left:auto;color:var(--mute)}
+.hoursbox{padding:24px;border-radius:20px;background:var(--bg2);border:1px solid var(--line)}
+.hoursbox h3{font-family:"Shippori Mincho";font-size:22px;margin:0 0 12px}
+.hoursbox p{color:#c9bdac;line-height:1.6;font-size:14.5px;margin:0 0 16px}
+.hours div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
+.hours div.today{color:var(--gold2)}
+
+footer.site{border-top:1px solid var(--line);padding:30px 20px calc(30px + var(--tabh) + var(--safe-b));text-align:center;color:#7f7369;font-size:13px;line-height:1.8}
+footer.site b{color:var(--gold)}
+
+/* barra inferior estilo app (celular) */
+.tabbar{display:none}
+
+/* ================= CARDÁPIO DA MESA (QR) ================= */
+#menuApp{display:none}
+body.menu-mode #site{display:none}
+body.menu-mode #menuApp{display:block}
+.app{max-width:480px;margin:0 auto;min-height:100vh;position:relative;padding-bottom:calc(96px + var(--safe-b))}
+.app header{padding:calc(16px + var(--safe-t)) 20px 18px;background:radial-gradient(120% 90% at 85% 0%,rgba(228,34,39,.28),transparent 60%),var(--bg)}
+.app .tbar{display:flex;align-items:center;justify-content:space-between}
+.mesa{font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);padding:7px 10px;border-radius:999px;color:var(--mute)}
+.mesa em{font-style:normal;color:var(--gold2)}
+.hello{margin-top:20px}
+.hello p{margin:0;color:var(--gold);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.hello h1{margin:6px 0 0;font-family:"Shippori Mincho";font-weight:700;font-size:27px;line-height:1.2}
+.hello h1 span{color:var(--gold2)}
+.arhero{margin-top:16px;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(248,178,34,.1);border:1px solid rgba(248,178,34,.28)}
+.arhero .cube{width:40px;height:40px;flex:none;border-radius:10px;background:var(--gold);display:grid;place-items:center;color:#141414}
+.arhero b{display:block;font-size:14px}
+.arhero span{font-size:12.5px;color:var(--mute);line-height:1.4}
+.appnav{position:sticky;top:0;z-index:20;background:rgba(16,16,16,.95);border-bottom:1px solid var(--line);padding:10px 0 12px}
+.search{margin:0 20px 10px;display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.search input{flex:1;background:none;border:0;outline:0;color:var(--ink);font:inherit;font-size:14px}
+.search input::placeholder{color:#75695f}
+.appnav .chips{display:flex;gap:8px;overflow-x:auto;padding:0 20px;scrollbar-width:none}
+.appnav .chips::-webkit-scrollbar{display:none}
+.app section{padding:22px 20px 4px}
+.app section h2{margin:0 0 12px;font-size:19px;font-family:"Shippori Mincho"}
+.feat{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:12px;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.feat::-webkit-scrollbar{display:none}
+.feat .fcard{scroll-snap-align:start}
+.app footer{padding:28px 20px 10px;text-align:center;color:#7f7369;font-size:12px;line-height:1.8}
+.app footer a{color:var(--gold)}
+.empty{color:var(--mute);font-size:14px;text-align:center;padding:30px 0;display:none}
+
+/* ================= COMPARTILHADO ================= */
+.cartbar{position:fixed;left:50%;transform:translate(-50%,180%);bottom:calc(14px + var(--tabh) + var(--safe-b));width:min(448px,calc(100% - 32px));z-index:45;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-radius:14px;background:var(--gold);color:#141414;font-weight:600;box-shadow:0 12px 34px rgba(0,0,0,.45);transition:transform .3s}
+.cartbar.show{transform:translate(-50%,0)}
+.cartbar:not(.show){visibility:hidden;transition:transform .3s,visibility 0s .3s}
+.cartbar .n{background:#141414;color:var(--gold2);border-radius:7px;padding:2px 8px;font-size:12px;margin-right:8px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:50%;bottom:0;width:min(520px,100%);transform:translate(-50%,105%);z-index:70;background:var(--bg);border-radius:22px 22px 0 0;border-top:1px solid var(--line);max-height:94vh;overflow-y:auto;transition:transform .35s cubic-bezier(.2,.8,.2,1);padding-bottom:calc(20px + var(--safe-b))}
+.sheet.show{transform:translate(-50%,0)}
+.sheet:not(.show){visibility:hidden;transition:transform .35s,visibility 0s .35s}
+@media (min-width:900px){.sheet{bottom:50%;border-radius:22px;border:1px solid var(--line);transform:translate(-50%,calc(50% + 100vh))}.sheet.show{transform:translate(-50%,50%)}}
+.grab{width:40px;height:4px;border-radius:4px;background:#3e342f;margin:10px auto 0}
+.close{position:absolute;top:14px;right:14px;z-index:5;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid var(--line);display:grid;place-items:center}
+.stage{position:relative;margin:10px 12px 0;border-radius:18px;overflow:hidden;background:radial-gradient(80% 70% at 50% 40%,#352626,#101010 75%);border:1px solid var(--line)}
+.stage model-viewer{display:block;width:100%;height:min(52vh,400px);background:transparent;--poster-color:transparent}
+.arbtn{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--gold);color:#141414;font-weight:700;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.4);white-space:nowrap}
+.noar{position:absolute;left:12px;right:12px;bottom:12px;padding:10px 12px;border-radius:12px;background:rgba(16,16,16,.9);border:1px solid var(--line);font-size:12px;color:var(--mute);text-align:center;display:none}
+.progress{position:absolute;left:0;right:0;bottom:0;height:3px}
+.progress i{display:block;height:100%;width:0;background:var(--gold)}
+.detail{padding:18px 20px 0;position:relative}
+.detail h3{margin:0;font-family:"Shippori Mincho";font-size:25px}
+.detail .sub{color:var(--mute);font-size:13px;margin-top:2px}
+.detail p.desc{color:#cfc2b1;font-size:14.5px;line-height:1.55;margin:12px 0}
+.nutri{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.nutri div{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center}
+.nutri b{display:block;font-size:15px;color:var(--gold2)}
+.nutri span{font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.ing{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.ing span{font-size:12px;padding:6px 10px;border-radius:999px;background:var(--bg2);border:1px solid var(--line)}
+.buy{display:flex;gap:12px;align-items:center;margin-top:18px}
+.qty{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.qty button{font-size:20px;width:22px}
+.cta{flex:1;padding:14px 16px;border-radius:12px;background:var(--red);color:#fff;font-weight:700;display:flex;justify-content:space-between}
+.cart-list .ci{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.cart-list .ci span{color:var(--mute)}
+.cart-list .ci button{color:var(--mute);font-size:12.5px;text-decoration:underline}
+.total{display:flex;justify-content:space-between;font-size:17px;font-weight:700;margin:14px 0 18px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);margin-bottom:14px}
+.seg button{padding:11px 8px;border-radius:9px;font-size:14px;font-weight:600;color:var(--mute)}
+.seg button.on{background:var(--gold);color:#141414}
+.pane{display:none;gap:10px}
+.pane.on{display:grid}
+.pane .help{font-size:13px;color:var(--mute);line-height:1.5;margin:0}
+.pane .btn{width:100%;border-radius:12px;padding:15px}
+.toast{position:fixed;left:50%;top:calc(16px + var(--safe-t));transform:translate(-50%,-180%);z-index:90;background:#1f3a29;border:1px solid #3c7a52;color:#cff5da;padding:12px 16px;border-radius:12px;font-size:14px;transition:transform .3s}
+.toast.show{transform:translate(-50%,0)}
+.toast:not(.show){visibility:hidden;transition:transform .3s,visibility 0s .3s}
+
+@media (max-width:900px){
+  .links,.topnav .btn-ghost{display:none}
+  .hero .wrap,.about,.duo,.visit{grid-template-columns:1fr}
+  .heromodel{max-width:300px;width:100%;margin:0 auto;order:-1;max-height:300px}
+  .hero{padding:24px 0 30px}
+  .herologo{display:none}
+  .quick{grid-template-columns:1fr 1fr}
+  .featgrid{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:78%;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scroll-snap-type:x mandatory;scrollbar-width:none}
+  .featgrid::-webkit-scrollbar{display:none}
+  .featgrid .fcard{scroll-snap-align:start}
+  .homelist{grid-template-columns:1fr}
+  .sec{padding:56px 0}
+  /* barra inferior */
+  body:not(.menu-mode){--tabh:64px}
+  body:not(.menu-mode) .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:44;background:#101010;border-top:1px solid var(--line);padding:6px 4px calc(6px + var(--safe-b))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--mute);padding:4px 0}
+  .tabbar a.on{color:var(--gold2)}
+  .tabbar svg{width:22px;height:22px}
+}
+@media (max-width:520px){
+  .topnav .btn-gold{display:none}
+  form.res{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr 1fr}
+  .qa{padding:14px;gap:10px}
+  .qa .ic{width:38px;height:38px}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================================================= SITE -->
+<div id="site">
+  <nav class="topnav">
+    <div class="wrap">
+      <a href="#inicio" class="brand"><img class="logo" src="assets/img/logo.png" alt="Katsuya Japanese Food"><div><b>Katsuya</b><small>Japanese Food</small></div></a>
+      <div class="links" id="links"><a href="#sobre">Sobre</a><a href="#menu">Cardápio</a><a href="#delivery">Delivery</a><a href="#reservas">Reservas</a><a href="#visite">Localização</a></div>
+      <div style="display:flex;gap:8px"><a class="btn btn-ghost" href="#delivery">Pedir agora</a><a class="btn btn-gold" href="#reservas">Reservar</a></div>
+    </div>
+  </nav>
+
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <img class="herologo" src="assets/img/logo.png" alt="Katsuya Japanese Food">
+        <div class="label">Restaurante japonês · Praia Grande</div>
+        <h1>O japonês <em>mais completo</em> da Baixada.</h1>
+        <p class="lead">Gastronomia oriental de qualidade no Canto do Forte. E agora você vê os pratos em 3D, na sua mesa, antes de pedir.</p>
+        <div class="ctas">
+          <a class="btn btn-gold" href="#menu">Ver cardápio</a>
+          <a class="btn btn-ghost" href="#reservas">Reservar mesa</a>
+        </div>
+      </div>
+      <div class="heromodel koiwrap" aria-hidden="true">
+        <div class="ripple"></div><div class="ripple r2"></div><div class="ripple r3"></div>
+        <svg id="koi" viewBox="-200 -200 400 400">
+          <defs>
+            <radialGradient id="kgR" cx="0" cy="0" r="120" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff5a3c"/><stop offset=".6" stop-color="#e42227"/><stop offset="1" stop-color="#a5121a"/></radialGradient>
+            <radialGradient id="kgY" cx="0" cy="0" r="120" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffd76a"/><stop offset=".6" stop-color="#f8b222"/><stop offset="1" stop-color="#e2850f"/></radialGradient>
+            <radialGradient id="pond" cx="0" cy="0" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1d1414"/><stop offset=".7" stop-color="#121010"/><stop offset="1" stop-color="#101010" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle r="190" fill="url(#pond)"/>
+          <circle r="150" fill="none" stroke="rgba(248,178,34,.14)"/>
+          <g id="koiRot">
+            <g id="kA"></g>
+            <g id="kB" transform="rotate(180)"></g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="quick">
+      <a class="qa main" href="#menu"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span><b>Cardápio</b><small>Pratos e preços</small></span></a>
+      <a class="qa" href="#delivery"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><span><b>Delivery</b><small>Peça pelo WhatsApp</small></span></a>
+      <a class="qa" href="#reservas"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><b>Reservas</b><small>Garanta sua mesa</small></span></a>
+      <a class="qa" href="#visite"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><b>Como chegar</b><small>Endereço e contato</small></span></a>
+    </div>
+  </div>
+
+  <section class="sec" id="sobre">
+    <div class="wrap">
+      <div class="head"><div class="label">Sobre nós</div><h2>Gastronomia oriental <em>de qualidade</em></h2></div>
+      <div class="about">
+        <div class="aboutbox"><p>Na Avenida Marechal Mallet, no Canto do Forte, o Katsuya Sushi é o endereço de quem procura comida japonesa bem feita em Praia Grande. Peixes frescos, sushis e sashimis montados pelos nossos sushimen e um cardápio pensado para ser o mais completo da Baixada, para o almoço em família, o jantar a dois ou a comemoração do seu aniversário.</p></div>
+        <div class="facts">
+          <div class="fact"><b>64,8 mil</b><span>pessoas acompanham a casa no Instagram</span></div>
+          <div class="fact"><b>Peixe fresco</b><span>cortes feitos na hora pelos sushimen</span></div>
+          <div class="fact"><b>Para celebrar</b><span>aniversários e encontros com a cara do Katsuya</span></div>
+          <div class="fact"><b>3D / AR</b><span>veja o prato na sua mesa pelo QR Code</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="menu">
+    <div class="wrap">
+      <div class="head"><div class="label">Cardápio</div><h2>Escolha com os olhos. <em>Veja na mesa.</em></h2><p>Os pratos com selo AR podem ser vistos em 3D e colocados na sua mesa pela câmera do celular.</p></div>
+      <div class="featgrid" id="homeFeat"></div>
+      <div class="tabs" id="homeTabs"></div>
+      <div class="homelist" id="homeList"></div>
+      <div class="center"><a class="btn btn-ghost" href="#cardapio">Abrir cardápio completo</a></div>
+    </div>
+  </section>
+
+  <section class="sec" id="delivery">
+    <div class="wrap">
+      <div class="duo">
+        <div class="panel">
+          <div class="label">Delivery e retirada</div>
+          <h3>Katsuya na sua casa</h3>
+          <p>Monte seu pedido pelo cardápio do site e envie pelo WhatsApp. A mensagem já vai pronta com os itens e o total.</p>
+          <ul><li><i>1</i>Toque no + dos pratos que quiser</li><li><i>2</i>Abra “Ver pedido” e escolha delivery ou retirada</li><li><i>3</i>Envie pelo WhatsApp e aguarde a confirmação</li></ul>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto"><a class="btn btn-gold" href="#menu">Montar pedido</a><a class="btn btn-ghost" id="waDirect" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a></div>
+        </div>
+        <div class="panel ar">
+          <div class="label">No restaurante</div>
+          <h3>Veja o prato antes de pedir</h3>
+          <div class="mini3d" id="mini3d"></div>
+          <ul><li><i>1</i>Escaneie o QR Code da mesa</li><li><i>2</i>Toque em “Ver na minha mesa”</li><li><i>3</i>Peça pelo celular, direto para a cozinha</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="reservas">
+    <div class="wrap">
+      <div class="head"><div class="label">Reservas</div><h2>Garanta sua mesa</h2><p>Preencha e envie. A confirmação é feita pelo WhatsApp do restaurante.</p></div>
+      <div class="resgrid">
+        <form class="res" id="resForm">
+          <label class="fld full">Nome<input name="nome" required placeholder="Seu nome" autocomplete="name"></label>
+          <label class="fld">Data<input name="data" type="date" required></label>
+          <label class="fld">Horário<select name="hora" id="horaSel"></select></label>
+          <label class="fld">Pessoas<select name="pessoas"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7 ou mais</option></select></label>
+          <label class="fld">Ocasião<select name="ocasiao"><option>Nenhuma</option><option>Aniversário</option><option>Encontro</option><option>Trabalho</option></select></label>
+          <button class="btn btn-red full" type="submit" style="border-radius:12px;padding:15px">Reservar pelo WhatsApp</button>
+          <p class="note">🎂 Aniversariante? Selecione a ocasião e pergunte sobre as condições especiais.</p>
+          <div class="resout" id="resOut"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="visite">
+    <div class="wrap">
+      <div class="head"><div class="label">Localização</div><h2>Esperamos você <em>à mesa</em></h2></div>
+      <div class="visit">
+        <div id="contact"></div>
+        <div class="hoursbox"><h3>Horário de funcionamento</h3><div id="hours"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <img src="assets/img/logo.png" alt="Katsuya" style="width:64px;height:64px;border-radius:50%;display:block;margin:0 auto 12px">
+    <div>© <span id="yr"></span> Katsuya Sushi · <span id="fAddr"></span></div>
+    <div>Site e cardápio 3D/AR por <b>ramosraul.ia</b></div>
+  </footer>
+
+  <nav class="tabbar" id="tabbar">
+    <a href="#inicio" data-sec="inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Início</a>
+    <a href="#menu" data-sec="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Cardápio</a>
+    <a href="#delivery" data-sec="delivery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>Delivery</a>
+    <a href="#reservas" data-sec="reservas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Reservas</a>
+    <a href="#visite" data-sec="visite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Local</a>
+  </nav>
+</div>
+
+<!-- ======================================================= CARDÁPIO DA MESA (QR) -->
+<div id="menuApp">
+  <div class="app">
+    <header>
+      <div class="tbar">
+        <a href="#inicio" class="brand"><img class="logo" src="assets/img/logo.png" alt="Katsuya Japanese Food"><div><b>Katsuya</b><small>Cardápio digital</small></div></a>
+        <div class="mesa" id="mesaTag">Cardápio</div>
+      </div>
+      <div class="hello"><p id="greet">Boa noite</p><h1>Veja o prato <span>na sua mesa</span> antes de pedir.</h1></div>
+      <div class="arhero">
+        <div class="cube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg></div>
+        <div><b>Cardápio em Realidade Aumentada</b><span>Toque em um prato com o selo AR e aponte a câmera para a mesa.</span></div>
+      </div>
+    </header>
+    <div class="appnav">
+      <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a7b6d" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="Buscar prato ou ingrediente…" autocomplete="off"></label>
+      <div class="chips" id="appChips"></div>
+    </div>
+    <main id="appMenu"></main>
+    <div class="empty" id="empty">Nenhum prato encontrado.</div>
+    <footer><a href="#inicio">Conheça o restaurante →</a><br>Cardápio digital 3D/AR por ramosraul.ia</footer>
+  </div>
+</div>
+
+<!-- ======================================================= COMPARTILHADO -->
+<button class="cartbar" id="cartbar"><span><span class="n" id="cn">0</span>Ver pedido</span><span id="ct">R$ 0,00</span></button>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="dsheet" role="dialog" aria-modal="true">
+  <div class="grab"></div>
+  <div class="stage" id="stage">
+    <button class="close" data-close aria-label="Fechar"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div id="mvslot"></div>
+  </div>
+  <div class="detail" id="detail"></div>
+</div>
+<div class="sheet" id="csheet" role="dialog" aria-modal="true">
+  <div class="grab"></div>
+  <div class="detail">
+    <button class="close" data-close aria-label="Fechar" style="top:4px;right:16px"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h3>Seu pedido</h3>
+    <div class="cart-list" id="clist"></div>
+    <div class="total"><span>Total</span><span id="ctot"></span></div>
+    <div class="seg" id="seg">
+      <button data-mode="mesa">Estou na mesa</button>
+      <button data-mode="wa">Delivery ou retirada</button>
+    </div>
+    <div class="pane" id="paneMesa">
+      <label class="fld">Número da mesa<input id="mesaIn" inputmode="numeric" placeholder="Ex.: 7"></label>
+      <p class="help">O pedido vai direto para a cozinha e o garçom leva até a sua mesa.</p>
+      <button class="btn btn-red" id="sendKitchen">Enviar para a cozinha</button>
+    </div>
+    <div class="pane" id="paneWa">
+      <label class="fld">Nome<input id="waNome" placeholder="Seu nome" autocomplete="name"></label>
+      <label class="fld">Como prefere receber?<select id="waTipo"><option>Retirada no restaurante</option><option>Delivery</option></select></label>
+      <label class="fld" id="waEndWrap" style="display:none">Endereço de entrega<input id="waEnd" placeholder="Rua, número, bairro" autocomplete="street-address"></label>
+      <label class="fld">Observações<input id="waObs" placeholder="Opcional"></label>
+      <a class="btn btn-gold" id="sendWa" href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== DADOS DO RESTAURANTE — edite aqui ===================== */
+const GLB_sushi="assets/models/sushi.glb";
+const GLB_tonkatsu="assets/models/tonkatsu.glb";
+const GLB_lamen="assets/models/lamen.glb";
+const INFO={
+  nome:"Katsuya Sushi",
+  endereco:"Av. Marechal Mallet, 1210 — Canto do Forte, Praia Grande/SP",
+  telefone:"(13) 3379-3000",
+  whatsapp:"551333793000",            // só números, com DDI 55 + DDD
+  instagram:"https://instagram.com/katsuyasushi",
+  instagramUser:"@katsuyasushi",
+  maps:"https://www.google.com/maps/search/?api=1&query=Katsuya+Sushi+Av.+Marechal+Mallet+1210+Praia+Grande+SP",
+  // Horários reais: 0=Dom ... 6=Sáb → ["HH:MM","HH:MM"] ou null (fechado). Deixe horarios:null para mostrar "consulte".
+  horarios:null
+};
+const CATS=[
+  {id:"ar",name:"Em 3D/AR"},
+  {id:"entradas",name:"Entradas"},
+  {id:"sushi",name:"Sushi & Sashimi"},
+  {id:"quentes",name:"Pratos quentes"},
+  {id:"lamen",name:"Lámen"},
+  {id:"sobremesas",name:"Sobremesas"},
+  {id:"bebidas",name:"Bebidas"}
+];
+const ITEMS=[
+  {id:"sushi",cat:"sushi",name:"Combinado Katsuya",sub:"12 peças",price:79.9,model:GLB_sushi,img:"assets/img/sushi.png",
+   short:"12 peças: nigiri de salmão e atum + hossomaki, servido na tábua.",
+   desc:"Seleção do sushiman com 3 nigiris de salmão, 3 de atum e 6 hossomakis. Acompanha gengibre em conserva (gari) e wasabi.",
+   nutri:[["520","kcal"],["34g","proteína"],["12","peças"],["1–2","pessoas"]],ing:["Salmão","Atum","Arroz","Alga nori","Wasabi","Gari"],tags:[]},
+  {id:"tonkatsu",cat:"quentes",name:"Tonkatsu",sub:"Prato quente",price:54.9,model:GLB_tonkatsu,img:"assets/img/tonkatsu.png",
+   short:"Lombo suíno empanado no panko, arroz japonês, repolho e molho tonkatsu.",
+   desc:"Lombo suíno empanado no panko e frito na hora. Servido com arroz japonês com gergelim, repolho fatiado, limão e molho tonkatsu.",
+   nutri:[["780","kcal"],["42g","proteína"],["15","min"],["1","pessoa"]],ing:["Lombo suíno","Panko","Arroz","Repolho","Molho tonkatsu"],tags:["Mais pedido"]},
+  {id:"lamen",cat:"lamen",name:"Lámen Tonkotsu",sub:"Prato quente",price:49.9,model:GLB_lamen,img:"assets/img/lamen.png",
+   short:"Caldo cremoso de osso suíno, chashu, ovo marinado, nori e cebolinha.",
+   desc:"Caldo tonkotsu, macarrão, duas fatias de chashu (barriga suína), ovo marinado, narutomaki, nori, gergelim e cebolinha.",
+   nutri:[["690","kcal"],["36g","proteína"],["12h","de caldo"],["1","pessoa"]],ing:["Caldo tonkotsu","Chashu","Ovo","Lámen","Nori","Cebolinha"],tags:[]},
+  {cat:"entradas",name:"Guioza (6 un.)",kj:"餃子",price:29.9,short:"Pastéis japoneses de porco e legumes, selados na chapa.",tags:[]},
+  {cat:"entradas",name:"Karaage",kj:"唐揚",price:34.9,short:"Frango marinado no shoyu e gengibre, frito e crocante.",tags:["Mais pedido"]},
+  {cat:"entradas",name:"Edamame",kj:"枝豆",price:19.9,short:"Soja verde cozida no vapor com flor de sal.",tags:["Vegetariano"]},
+  {cat:"entradas",name:"Sunomono",kj:"酢物",price:16.9,short:"Salada agridoce de pepino japonês com gergelim.",tags:["Vegetariano"]},
+  {cat:"sushi",name:"Sashimi de Salmão",kj:"刺身",price:49.9,short:"10 fatias de salmão fresco.",tags:[]},
+  {cat:"sushi",name:"Uramaki Philadelphia",kj:"巻",price:34.9,short:"8 peças com salmão, cream cheese e cebolinha.",tags:[]},
+  {cat:"sushi",name:"Temaki de Salmão",kj:"手巻",price:29.9,short:"Cone de alga com arroz, salmão e cebolinha.",tags:[]},
+  {cat:"quentes",name:"Yakisoba",kj:"焼",price:52.9,short:"Macarrão com legumes, carne e frango no molho da casa.",tags:[]},
+  {cat:"quentes",name:"Salmão Grelhado",kj:"鮭",price:64.9,short:"Filé de salmão grelhado com legumes e arroz.",tags:[]},
+  {cat:"lamen",name:"Missô Lámen",kj:"味噌",price:46.9,short:"Caldo de missô, milho, broto de feijão e chashu.",tags:[]},
+  {cat:"sobremesas",name:"Harumaki de Banana",kj:"春巻",price:19.9,short:"Rolinho crocante de banana com canela e sorvete.",tags:[]},
+  {cat:"sobremesas",name:"Mochi (3 un.)",kj:"餅",price:22.9,short:"Bolinhos de arroz recheados.",tags:[]},
+  {cat:"bebidas",name:"Refrigerante lata",kj:"飲",price:7.9,short:"350 ml.",tags:[]},
+  {cat:"bebidas",name:"Chá Verde Gelado",kj:"茶",price:12.9,short:"Feito na casa, sem açúcar.",tags:[]},
+  {cat:"bebidas",name:"Saquê (dose)",kj:"酒",price:24.9,short:"Servido frio ou quente.",tags:[]}
+];
+/* ============================================================================ */
+ITEMS.forEach((it,i)=>{if(!it.id)it.id="i"+i});
+const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const $=s=>document.querySelector(s);
+const cart={};
+const DIAS=["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+const wa=t=>`https://wa.me/${INFO.whatsapp}${t?"?text="+encodeURIComponent(t):""}`;
+
+/* ---------- mesa: QR com /cardapio?mesa=7  ou  #mesa-7 ---------- */
+let mesa=null;
+try{mesa=new URLSearchParams(location.search).get("mesa")}catch(e){}
+function readHashMesa(){const m=location.hash.match(/^#mesa-(\d{1,3})$/);if(m)mesa=m[1]}
+function paintMesa(){if(!mesa)return;$("#mesaTag").innerHTML=`Mesa <em>${String(mesa).padStart(2,"0")}</em>`;$("#mesaIn").value=mesa}
+
+/* ---------- rotas: site × cardápio da mesa ---------- */
+function isMenuRoute(){return location.hash==="#cardapio"||/^#mesa-\d+$/.test(location.hash)||/\/cardapio\/?$/.test(location.pathname)}
+let lastMode=null;
+function route(){
+  readHashMesa();paintMesa();
+  const menu=isMenuRoute();
+  document.body.classList.toggle("menu-mode",menu);
+  if(menu!==lastMode){window.scrollTo(0,0);lastMode=menu}
+  updateCart();
+}
+window.addEventListener("hashchange",route);
+const H=new Date().getHours();$("#greet").textContent=H<12?"Bom dia":H<18?"Boa tarde":"Boa noite";
+
+/* ---------- renderizadores ---------- */
+function tagHTML(t){return t.map(x=>`<span class="tag">${x}</span>`).join("")}
+function fcard(it){return `<button class="fcard" data-open="${it.id}"><span class="badge">VER EM 3D</span>
+  <img src="${it.img}" alt="${it.name}" loading="lazy"><h3>${it.name}</h3><p>${it.short}</p>
+  <div class="row"><span class="price">${brl(it.price)}</span><span class="add" data-add="${it.id}" aria-label="Adicionar">+</span></div></button>`}
+function itemRow(it){return `<div class="item" data-open="${it.id}" role="button" tabindex="0">
+  <div class="thumb">${it.img?`<img src="${it.img}" alt="" loading="lazy"><span class="ar">3D</span>`:`<span class="kj" style="${it.kj.length>2?"font-size:18px":""}">${it.kj}</span>`}</div>
+  <div class="txt"><h4>${it.name}</h4><p>${it.short}</p><div class="tags">${tagHTML(it.tags)}<span class="price" style="font-size:14px">${brl(it.price)}</span></div></div>
+  <button class="add" data-add="${it.id}" aria-label="Adicionar">+</button></div>`}
+
+let homeCat="sushi";
+function renderHome(){
+  $("#homeFeat").innerHTML=ITEMS.filter(i=>i.model).map(fcard).join("");
+  $("#homeTabs").innerHTML=CATS.filter(c=>c.id!=="ar").map(c=>`<button class="chip ${c.id===homeCat?"on":""}" data-hcat="${c.id}">${c.name}</button>`).join("");
+  $("#homeList").innerHTML=ITEMS.filter(i=>i.cat===homeCat&&!i.model).map(itemRow).join("")||`<p style="color:var(--mute);grid-column:1/-1;text-align:center">Veja os pratos em 3D acima.</p>`;
+}
+let appCat="ar";
+function renderApp(){
+  const q=$("#q").value.trim().toLowerCase();
+  const match=it=>!q||(it.name+" "+it.short+" "+(it.ing||[]).join(" ")).toLowerCase().includes(q);
+  let html="";const feat=ITEMS.filter(i=>i.model&&match(i));
+  if(feat.length)html+=`<section id="a-ar"><h2>Em 3D/AR</h2><div class="feat">${feat.map(fcard).join("")}</div></section>`;
+  CATS.filter(c=>c.id!=="ar").forEach(c=>{const l=ITEMS.filter(i=>i.cat===c.id&&match(i));if(l.length)html+=`<section id="a-${c.id}"><h2>${c.name}</h2>${l.map(itemRow).join("")}</section>`});
+  $("#appMenu").innerHTML=html;$("#empty").style.display=html?"none":"block";
+}
+function renderAppChips(){$("#appChips").innerHTML=CATS.map(c=>`<button class="chip ${c.id===appCat?"on":""}" data-acat="${c.id}">${c.name}</button>`).join("")}
+
+/* ---------- pedido: mesa (cozinha) × WhatsApp ---------- */
+function cartLines(){return Object.entries(cart).map(([id,q])=>[ITEMS.find(i=>i.id===id),q])}
+function cartTotal(){return cartLines().reduce((a,[it,q])=>a+it.price*q,0)}
+function setMode(m){
+  document.querySelectorAll("#seg button").forEach(b=>b.classList.toggle("on",b.dataset.mode===m));
+  $("#paneMesa").classList.toggle("on",m==="mesa");$("#paneWa").classList.toggle("on",m==="wa");
+  updateWaLink();
+}
+function updateWaLink(){
+  const tipo=$("#waTipo").value,deliv=tipo==="Delivery";
+  $("#waEndWrap").style.display=deliv?"":"none";
+  const nome=$("#waNome").value.trim(),end=$("#waEnd").value.trim(),obs=$("#waObs").value.trim();
+  const txt=`Olá! Quero fazer um pedido no ${INFO.nome}:\n\n`+cartLines().map(([it,q])=>`• ${q}x ${it.name} — ${brl(it.price*q)}`).join("\n")+
+    `\n\nTotal: ${brl(cartTotal())}\nNome: ${nome||"-"}\n${tipo}${deliv?`\nEndereço: ${end||"-"}`:""}${obs?`\nObs.: ${obs}`:""}`;
+  $("#sendWa").href=wa(txt);
+}
+function updateCart(){
+  const n=Object.values(cart).reduce((a,b)=>a+b,0),t=cartTotal();
+  $("#cn").textContent=n;$("#ct").textContent=brl(t);
+  $("#cartbar").classList.toggle("show",n>0);
+  $("#clist").innerHTML=cartLines().map(([it,q])=>`<div class="ci"><div>${q}× ${it.name} <button data-rm="${it.id}">remover</button></div><span>${brl(it.price*q)}</span></div>`).join("");
+  $("#ctot").textContent=brl(t);
+  updateWaLink();
+}
+function openCart(){setMode(mesa?"mesa":"wa");openSheet($("#csheet"))}  // veio pelo QR da mesa → cozinha; senão → WhatsApp
+function add(id,q=1){cart[id]=(cart[id]||0)+q;updateCart();toast("Adicionado ao pedido")}
+let tt;function toast(m){const el=$("#toast");el.textContent=m;el.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>el.classList.remove("show"),1800)}
+
+/* ---------- janelas ---------- */
+function openSheet(el){$("#scrim").classList.add("show");el.classList.add("show");document.body.classList.add("lock")}
+function closeSheets(){document.querySelectorAll(".sheet").forEach(s=>s.classList.remove("show"));$("#scrim").classList.remove("show");document.body.classList.remove("lock");
+  setTimeout(()=>{if(!$("#dsheet").classList.contains("show"))$("#mvslot").innerHTML=""},400)}
+function openItem(id){
+  const it=ITEMS.find(i=>i.id===id);let q=1;
+  if(it.model){
+    $("#stage").style.display="";
+    $("#mvslot").innerHTML=`<model-viewer id="mv" src="${it.model}" alt="${it.name} em 3D" camera-controls touch-action="pan-y"
+      auto-rotate auto-rotate-delay="1500" rotation-per-second="15deg" shadow-intensity="1.1" exposure="1.05" environment-image="neutral"
+      camera-orbit="20deg 62deg auto" min-camera-orbit="auto 10deg auto" max-camera-orbit="auto 88deg auto"
+      ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" ar-placement="floor" interaction-prompt="none">
+        <button slot="ar-button" class="arbtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg>Ver na minha mesa</button>
+        <div class="progress" slot="progress-bar"><i></i></div>
+        <div class="noar" id="noar">Para ver em realidade aumentada, abra pelo celular (iPhone ou Android).</div>
+      </model-viewer>`;
+    const mv=$("#mv");
+    mv.addEventListener("progress",e=>{const b=mv.querySelector(".progress i");if(b){b.style.width=(e.detail.totalProgress*100)+"%";if(e.detail.totalProgress>=1)setTimeout(()=>b.parentNode.style.opacity=0,300)}});
+    mv.addEventListener("load",()=>{if(!mv.canActivateAR){const n=$("#noar");if(n)n.style.display="block"}});
+    mv.addEventListener("ar-status",e=>{if(e.detail.status==="failed")toast("Não foi possível abrir o AR neste aparelho")});
+  }else{$("#stage").style.display="none";$("#mvslot").innerHTML=""}
+  $("#detail").innerHTML=`${it.model?"":`<div style="height:36px"></div><button class="close" data-close aria-label="Fechar" style="top:4px;right:16px"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`}
+    <h3>${it.name}</h3><div class="sub">${it.sub||CATS.find(c=>c.id===it.cat).name}</div><p class="desc">${it.desc||it.short}</p>
+    ${it.nutri?`<div class="nutri">${it.nutri.map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join("")}</div>`:""}
+    ${it.ing?`<div class="ing">${it.ing.map(x=>`<span>${x}</span>`).join("")}</div>`:""}
+    <div class="buy"><div class="qty"><button id="qm">−</button><b id="qv">1</b><button id="qp">+</button></div>
+    <button class="cta" id="qa"><span>Adicionar</span><span id="qt">${brl(it.price)}</span></button></div>`;
+  const upd=()=>{$("#qv").textContent=q;$("#qt").textContent=brl(it.price*q)};
+  $("#qm").onclick=()=>{if(q>1){q--;upd()}};$("#qp").onclick=()=>{q++;upd()};
+  $("#qa").onclick=()=>{add(it.id,q);closeSheets()};
+  $("#dsheet").scrollTop=0;openSheet($("#dsheet"));
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener("click",e=>{
+  const rm=e.target.closest("[data-rm]");if(rm){delete cart[rm.dataset.rm];updateCart();if(!Object.keys(cart).length)closeSheets();return}
+  const a=e.target.closest("[data-add]");if(a){e.stopPropagation();e.preventDefault();add(a.dataset.add);return}
+  if(e.target.closest("[data-close]")){closeSheets();return}
+  const md=e.target.closest("[data-mode]");if(md){setMode(md.dataset.mode);return}
+  const o=e.target.closest("[data-open]");if(o){openItem(o.dataset.open);return}
+  const h=e.target.closest("[data-hcat]");if(h){homeCat=h.dataset.hcat;renderHome();return}
+  const c=e.target.closest("[data-acat]");if(c){appCat=c.dataset.acat;renderAppChips();const s=document.getElementById("a-"+appCat);if(s)window.scrollTo({top:s.getBoundingClientRect().top+scrollY-118,behavior:"smooth"})}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheets();if(e.key==="Enter"&&e.target.matches("[data-open]"))openItem(e.target.dataset.open)});
+$("#scrim").onclick=closeSheets;
+$("#cartbar").onclick=openCart;
+["waNome","waEnd","waObs"].forEach(id=>$("#"+id).addEventListener("input",updateWaLink));
+$("#waTipo").addEventListener("change",updateWaLink);
+$("#sendWa").addEventListener("click",e=>{
+  if(!$("#waNome").value.trim()){e.preventDefault();$("#waNome").focus();toast("Informe seu nome");return}
+  if($("#waTipo").value==="Delivery"&&!$("#waEnd").value.trim()){e.preventDefault();$("#waEnd").focus();toast("Informe o endereço de entrega");return}
+  setTimeout(()=>{for(const k in cart)delete cart[k];updateCart();closeSheets()},400);
+});
+$("#sendKitchen").onclick=()=>{
+  const n=$("#mesaIn").value.trim();
+  if(!n){$("#mesaIn").focus();toast("Informe o número da mesa");return}
+  mesa=n;paintMesa();
+  /* Integração real (ex.: Supabase → painel da cozinha) entra aqui. Na demo, apenas confirma. */
+  for(const k in cart)delete cart[k];updateCart();closeSheets();
+  toast(`Pedido da mesa ${String(n).padStart(2,"0")} enviado para a cozinha`);
+};
+$("#q").addEventListener("input",renderApp);
+
+/* ---------- barra inferior / menu: seção ativa ---------- */
+const secs=["inicio","sobre","menu","delivery","reservas","visite"];
+const spy=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){const id=en.target.id;
+  document.querySelectorAll("#tabbar a").forEach(a=>a.classList.toggle("on",a.dataset.sec===id||(id==="sobre"&&a.dataset.sec==="inicio")));
+  document.querySelectorAll("#links a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+id));}}),{rootMargin:"-45% 0px -50% 0px"});
+secs.forEach(id=>{const el=document.getElementById(id);if(el)spy.observe(el)});
+
+/* ---------- contato, horários, reserva ---------- */
+function toMin(s){const[h,m]=s.split(":").map(Number);return h*60+m}
+(function info(){
+  const now=new Date(),d=now.getDay(),m=now.getHours()*60+now.getMinutes();
+  const ic={pin:'<path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',wa:'<path d="M3 21l1.6-4.7A8.5 8.5 0 1 1 8 19.6z"/>',ig:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>'};
+  const svg=p=>`<span class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">${p}</svg></span>`;
+  const go='<span class="go">→</span>';
+  $("#contact").innerHTML=`<a class="crow" href="${INFO.maps}" target="_blank" rel="noopener">${svg(ic.pin)}<span><small>Endereço · abrir no mapa</small>${INFO.endereco}</span>${go}</a>
+    <a class="crow" href="${wa()}" target="_blank" rel="noopener">${svg(ic.wa)}<span><small>WhatsApp · pedidos e reservas</small>${INFO.telefone}</span>${go}</a>
+    <a class="crow" href="${INFO.instagram}" target="_blank" rel="noopener">${svg(ic.ig)}<span><small>Instagram · 64,8 mil seguidores</small>${INFO.instagramUser}</span>${go}</a>`;
+  if(INFO.horarios){
+    const h=INFO.horarios[d],open=h&&m>=toMin(h[0])&&m<toMin(h[1]);
+    $("#hours").innerHTML=`<div><span>Agora</span><span style="color:${open?"#5fd38a":"#e25b4f"}">${open?"Aberto · fecha às "+h[1]:"Fechado"}</span></div>`+
+      [1,2,3,4,5,6,0].map(i=>{const x=INFO.horarios[i];return `<div class="${i===d?"today":""}"><span>${DIAS[i]}</span><span>${x?x[0]+" – "+x[1]:"Fechado"}</span></div>`}).join("");
+  }else{
+    $("#hours").innerHTML=`<p>Horários de almoço e jantar e avisos de feriado ficam sempre atualizados no destaque <b style="color:var(--gold2)">HORÁRIOS</b> do Instagram e pelo WhatsApp.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-gold" href="${wa("Olá! Qual o horário de funcionamento hoje?")}" target="_blank" rel="noopener">Consultar no WhatsApp</a><a class="btn btn-ghost" href="${INFO.instagram}" target="_blank" rel="noopener">Ver no Instagram</a></div>`;
+  }
+  $("#waDirect").href=wa("Olá! Quero fazer um pedido para delivery/retirada.");
+  $("#fAddr").textContent=INFO.endereco;$("#yr").textContent=now.getFullYear();
+  let opts="";for(let t=toMin("11:30");t<=toMin("23:00");t+=30)opts+=`<option>${String(Math.floor(t/60)).padStart(2,"0")}:${String(t%60).padStart(2,"0")}</option>`;
+  $("#horaSel").innerHTML=opts;$("#horaSel").value="20:00";
+  const dt=$("#resForm [name=data]");const iso=new Date(now-now.getTimezoneOffset()*6e4).toISOString().slice(0,10);dt.min=iso;dt.value=iso;
+})();
+$("#resForm").addEventListener("submit",e=>{
+  e.preventDefault();const f=new FormData(e.target);const [y,mo,da]=f.get("data").split("-");
+  const txt=`Olá! Gostaria de reservar uma mesa no ${INFO.nome}.\nNome: ${f.get("nome")}\nData: ${da}/${mo}/${y}\nHorário: ${f.get("hora")}\nPessoas: ${f.get("pessoas")}\nOcasião: ${f.get("ocasiao")}`;
+  const o=$("#resOut");o.style.display="block";
+  o.innerHTML=`Reserva para <b>${da}/${mo} às ${f.get("hora")}</b>, ${f.get("pessoas")} pessoa(s). <a href="${wa(txt)}" target="_blank" rel="noopener">Abrir WhatsApp e enviar →</a>`;
+});
+
+/* ---------- modelos 3D da home ---------- */
+const M=id=>ITEMS.find(i=>i.id===id).model;
+
+/* ---------- carpas yin-yang (logo) ---------- */
+(function koi(){
+  const NS="http://www.w3.org/2000/svg",R=104,N=46,SWEEP=2.75;
+  const mk=(g,tag,attrs)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);g.appendChild(e);return e};
+  function build(g,grad,fin){
+    return {
+      tail:mk(g,"path",{fill:fin,opacity:.9}),
+      finL:mk(g,"path",{fill:fin,opacity:.85}),finR:mk(g,"path",{fill:fin,opacity:.85}),
+      pelL:mk(g,"path",{fill:fin,opacity:.75}),pelR:mk(g,"path",{fill:fin,opacity:.75}),
+      body:mk(g,"path",{fill:`url(#${grad})`,stroke:"rgba(0,0,0,.25)","stroke-width":1}),
+      dorsal:mk(g,"path",{fill:"none",stroke:"rgba(255,255,255,.28)","stroke-width":3,"stroke-linecap":"round"}),
+      eyeL:mk(g,"circle",{r:3.2,fill:"#141414"}),eyeR:mk(g,"circle",{r:3.2,fill:"#141414"})
+    };
+  }
+  const A=build(document.getElementById("kA"),"kgR","#ff6a4a"),B=build(document.getElementById("kB"),"kgY","#ffc95a");
+  const rot=(v,a)=>[v[0]*Math.cos(a)-v[1]*Math.sin(a),v[0]*Math.sin(a)+v[1]*Math.cos(a)];
+  const add=(p,v,k=1)=>[p[0]+v[0]*k,p[1]+v[1]*k];
+  const f=p=>p[0].toFixed(1)+" "+p[1].toFixed(1);
+  function width(s){return 44*(s<.16?Math.sqrt(s/.16)*.85+.15:1-Math.pow((s-.16)/.84,1.25)*.9)}
+  function fish(F,t,ph){
+    const sp=[],tg=[],nm=[];
+    for(let i=0;i<N;i++){
+      const s=i/(N-1),phi=-Math.PI/2-s*SWEEP,r=R*(1-.52*s);
+      sp.push([r*Math.cos(phi),r*Math.sin(phi)]);
+    }
+    for(let i=0;i<N;i++){
+      const a=sp[Math.max(0,i-1)],b=sp[Math.min(N-1,i+1)];let d=[b[0]-a[0],b[1]-a[1]];const l=Math.hypot(...d);d=[d[0]/l,d[1]/l];
+      tg.push(d);nm.push([-d[1],d[0]]);
+    }
+    const P=sp.map((p,i)=>{const s=i/(N-1);return add(p,nm[i],9*Math.pow(s,1.4)*Math.sin(2*Math.PI*1.25*s-t*4.2+ph))});
+    const L=[],Rr=[];
+    P.forEach((p,i)=>{const w=width(i/(N-1))/2;L.push(add(p,nm[i],w));Rr.push(add(p,nm[i],-w))});
+    const outline=L.concat(Rr.reverse());
+    F.body.setAttribute("d","M"+outline.map(f).join(" L")+"Z");
+    F.dorsal.setAttribute("d","M"+P.slice(3,Math.floor(N*.78)).map(f).join(" L"));
+    // cauda
+    const E=P[N-1],d=tg[N-1],fl=.38*Math.sin(-t*4.2+ph+2*Math.PI*1.25),Lt=40;
+    const t1=add(E,rot(d,.55+fl),Lt),t2=add(E,rot(d,-.55+fl),Lt),nt=add(E,rot(d,fl),Lt*.5);
+    F.tail.setAttribute("d",`M${f(E)} Q${f(add(E,rot(d,.75+fl),Lt*.55))} ${f(t1)} Q${f(add(E,rot(d,.2+fl),Lt*.62))} ${f(nt)} Q${f(add(E,rot(d,-.2+fl),Lt*.62))} ${f(t2)} Q${f(add(E,rot(d,-.75+fl),Lt*.55))} ${f(E)}Z`);
+    // nadadeiras
+    function finAt(el,s,side,len,flap){
+      const i=Math.round(s*(N-1)),w=width(s)/2,base=add(P[i],nm[i],side*w*.85);
+      const dir=rot(tg[i],side*(1.05+flap));const tip=add(base,dir,len);
+      const c1=add(add(base,dir,len*.5),nm[i],side*len*.35),c2=add(add(base,dir,len*.6),tg[i],len*.25);
+      el.setAttribute("d",`M${f(base)} Q${f(c1)} ${f(tip)} Q${f(c2)} ${f(add(base,tg[i],len*.35))}Z`);
+    }
+    const fp=.25*Math.sin(t*3+ph);
+    finAt(F.finL,.2,1,24,fp);finAt(F.finR,.2,-1,24,-fp);
+    finAt(F.pelL,.48,1,13,fp*.6);finAt(F.pelR,.48,-1,13,-fp*.6);
+    const ei=Math.round(.06*(N-1)),ew=width(.06)/2*.55;
+    const eL=add(P[ei],nm[ei],ew),eR=add(P[ei],nm[ei],-ew);
+    F.eyeL.setAttribute("cx",eL[0]);F.eyeL.setAttribute("cy",eL[1]);F.eyeR.setAttribute("cx",eR[0]);F.eyeR.setAttribute("cy",eR[1]);
+  }
+  const rotG=document.getElementById("koiRot");
+  const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let t0=performance.now(),vis=true;
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(document.getElementById("koi"));
+  function frame(now){
+    const t=reduce?0:(now-t0)/1000;
+    if(vis&&!document.body.classList.contains("menu-mode")){
+      rotG.setAttribute("transform",`rotate(${(t*16)%360})`);
+      fish(A,t,0);fish(B,t,Math.PI);
+    }
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+$("#mini3d").innerHTML=`<model-viewer src="${M("lamen")}" alt="Lámen em 3D" camera-controls disable-zoom touch-action="pan-y" auto-rotate rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="1.2" exposure="1.1" environment-image="neutral" camera-orbit="0deg 62deg auto"></model-viewer>`;
+
+renderHome();renderApp();renderAppChips();route();
+</script>
+</body>
+</html>
